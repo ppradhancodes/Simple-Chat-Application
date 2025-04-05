@@ -1,0 +1,22 @@
+# Rust build files
+/rust/target/
+/rust/Cargo.lock
+**/*.rs.bk
+
+# Go build files
+/go/bin/
+/go/pkg/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
