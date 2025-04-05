@@ -32,7 +32,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 Err(e) => println!("Error: {}", e),
             }
         } else {
-            print!("\nCommands:\n1. Send message\n2. View messages\n3. Search messages\n4. List users\n5. Logout\nChoice: ");
+            print!("\nCommands:\n1. Send message\n2. View messages\n3. Search messages\n4. List users\n5. Delete Message\n6. Logout\nChoice: ");
             io::stdout().flush()?;
             let mut choice = String::new();
             io::stdin().read_line(&mut choice)?;
@@ -98,6 +98,22 @@ fn main() -> Result<(), Box<dyn Error>> {
                     }
                 }
                 "5" => {
+                    print!("Enter delete keyword: ");
+                    io::stdout().flush()?;
+                    let mut keyword = String::new();
+                    io::stdin().read_line(&mut keyword)?;
+
+                    let is_delete = chat_handler.delete_message(
+                        keyword.trim(),
+                        &current_user.as_ref().unwrap().id
+                    );
+                    if is_delete {
+                        println!("Delete message successfully");
+                    } else {
+                        println!("No messages that are associated with the user.");
+                    }
+                }
+                "6" => {
                     println!("Goodbye, {}!", current_user.as_ref().unwrap().username);
                     current_user = None;
                 }
