@@ -46,6 +46,10 @@ impl ChatHandler {
         self.storage.search_messages(keyword, user_id)
     }
 
+    pub fn delete_message(&mut self, keyword: &str, user_id: &Uuid) -> bool {
+        self.storage.delete_message(keyword, user_id)
+    }
+
     pub fn list_users(&self) -> Vec<User> {
         self.storage.list_users()
     }

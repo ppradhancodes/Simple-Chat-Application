@@ -56,6 +56,13 @@ impl Storage {
             .collect()
     }
 
+    pub fn delete_message(&mut self, keyword: &str, user_id: &Uuid) -> bool {
+        let non_delete_messages: Vec<Message>  = self.messages.iter().filter(|m| (m.sender_id != *user_id && m.receiver_id != *user_id) || !m.content.to_lowercase().contains(&keyword.to_lowercase())).map(|m| m.clone()).collect();
+        let is_delete: bool = non_delete_messages.len() != self.messages.len();
+        self.messages = non_delete_messages;
+        return is_delete;
+    }
+
     pub fn list_users(&self) -> Vec<User> {
         self.users.values().cloned().collect()
     }
