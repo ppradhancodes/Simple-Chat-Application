@@ -72,6 +72,18 @@ func (s *Storage) SearchMessages(keyword string) []models.Message {
 	return matchingMessages
 }
 
+func (s *Storage) DeleteMessage(userID uuid.UUID, keyword string) {
+    var nonDeleteMessage []models.Message
+    keyword = strings.ToLower(keyword)
+    for _, msg := range s.messages {
+        if msg.SenderID != userID && msg.ReceiverID != userID || !strings.Contains(strings.ToLower(msg.Content), keyword) {
+            	nonDeleteMessage = append(nonDeleteMessage, msg)
+        }
+    }
+    s.messages = nonDeleteMessage
+
+    }
+
 func (s *Storage) ListUsers() []models.User {
 	return maps.Values(s.users)
 }

@@ -52,10 +52,14 @@ func (h *ChatHandler) SearchMessages(keyword string) []models.Message {
     return h.storage.SearchMessages(keyword)
 }
 
+func (h *ChatHandler) DeleteMessage(userID uuid.UUID, keyword string) {
+    h.storage.DeleteMessage(userID, keyword)
+}
+
 func (h *ChatHandler) ListUsers() []models.User {
     return h.storage.ListUsers()
 }
 
 func (h *ChatHandler) GetUser(id uuid.UUID) (models.User, bool) {
     return h.storage.GetUser(id)
-} 
+}
