@@ -1,6 +1,5 @@
 use crate::models::{Message, User};
 use std::collections::HashMap;
-use std::sync::{Arc, Mutex};
 use uuid::Uuid;
 
 #[derive(Default)]
@@ -10,11 +9,11 @@ pub struct Storage {
 }
 
 impl Storage {
-    pub fn new() -> Arc<Mutex<Self>> {
-        Arc::new(Mutex::new(Self {
+    pub fn new() -> Self {
+        Self {
             users: HashMap::new(),
             messages: Vec::new(),
-        }))
+        }
     }
 
     pub fn add_user(&mut self, user: User) -> Result<(), String> {

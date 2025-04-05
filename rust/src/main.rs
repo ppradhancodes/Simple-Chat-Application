@@ -5,13 +5,11 @@ mod utils;
 
 use handlers::ChatHandler;
 use std::io::{self, Write};
-use tokio;
 use std::error::Error;
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn Error>> {
+fn main() -> Result<(), Box<dyn Error>> {
     println!("Simple Chat Application");
-    let chat_handler = ChatHandler::new();
+    let mut chat_handler = ChatHandler::new();
     let mut current_user = None;
 
     loop {
@@ -78,7 +76,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     let mut keyword = String::new();
                     io::stdin().read_line(&mut keyword)?;
 
-                    let messages = chat_handler.search_messages(keyword.trim(), &current_user.as_ref().unwrap().id);
+                    let messages = chat_handler.search_messages(
+                        keyword.trim(),
+                        &current_user.as_ref().unwrap().id
+                    );
                     if messages.is_empty() {
                         println!("No messages found.");
                     } else {
