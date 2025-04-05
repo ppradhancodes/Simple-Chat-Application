@@ -71,15 +71,10 @@ func main() {
 					fmt.Println("No messages.")
 				} else {
 					for _, msg := range messages {
-						sender, exists := chatHandler.GetUser(msg.SenderID)
-						senderName := "Unknown"
-						if exists {
-							senderName = sender.Username
-						}
-						utils.PrintMessage(senderName, msg.Content, msg.Timestamp)
+						sender, _ := chatHandler.GetUser(msg.SenderID)
+						utils.PrintMessage(sender.Username, msg.Content, msg.Timestamp)
 					}
 				}
-
 			case "3":
 				fmt.Print("Enter search keyword: ")
 				if !scanner.Scan() {
