@@ -12,6 +12,14 @@ import (
 )
 
 func main() {
+	// Defer to exit peacefully
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Detect issues in Application")
+			os.Exit(1)
+		}
+	}()
+
 	fmt.Println("Simple Chat Application")
 	chatHandler := handlers.NewChatHandler()
 	scanner := bufio.NewScanner(os.Stdin)
