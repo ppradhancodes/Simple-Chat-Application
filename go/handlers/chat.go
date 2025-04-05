@@ -52,6 +52,10 @@ func (h *ChatHandler) SearchMessages(keyword string, userID uuid.UUID) []models.
     return h.storage.SearchMessages(keyword, userID)
 }
 
+func (h *ChatHandler) DeleteMessage(userID uuid.UUID, keyword string) {
+    h.storage.DeleteMessage(userID, keyword)
+}
+
 func (h *ChatHandler) ListUsers() []models.User {
     return h.storage.ListUsers()
 }
