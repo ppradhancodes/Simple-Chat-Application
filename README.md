@@ -9,16 +9,13 @@ This repository contains two implementations of a simple chat application - one 
 - View message history
 - Search messages by keyword
 - List registered users
-- Concurrent message handling
 - Timestamp-based message tracking
 
 ## Rust Implementation
 
 The Rust implementation showcases:
 - Memory safety through ownership and borrowing
-- Concurrent message handling with async/await
 - Structured error handling with Result types
-- Thread-safe storage with Mutex
 
 ### Running the Rust Application
 
@@ -60,7 +57,6 @@ Both applications provide a similar command-line interface:
 ## Design Considerations
 
 - In-memory storage for simplicity
-- Thread-safe operations for concurrent access
 - Efficient message filtering and search
 - User-friendly command-line interface
 - Timestamp-based message tracking

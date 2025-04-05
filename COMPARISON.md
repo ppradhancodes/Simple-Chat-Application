@@ -10,7 +10,6 @@ This document compares the implementation differences between the Rust and Go ve
 pub struct Storage {
     users: HashMap<Uuid, User>,
     messages: Vec<Message>,
-    mu: Mutex<()>,
 }
 
 impl Storage {
@@ -30,13 +29,10 @@ impl Storage {
 type Storage struct {
     users    map[uuid.UUID]models.User
     messages []models.Message
-    mu       sync.RWMutex
 }
 
 func (s *Storage) AddUser(user models.User) error {
     // No explicit memory management needed
-    s.mu.Lock()
-    defer s.mu.Unlock()
     s.users[user.ID] = user
     return nil
 }
@@ -50,50 +46,7 @@ func (s *Storage) AddUser(user models.User) error {
 - Rust provides memory safety guarantees at compile time
 - Go provides memory safety through runtime checks
 
-## 2. Concurrency Model
-
-### Rust Implementation
-```rust
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn Error>> {
-    let chat_handler = ChatHandler::new();
-    // Async/await pattern for concurrent operations
-    let mut current_user = None;
-    // ...
-}
-
-// Thread-safe storage with Arc and Mutex
-pub struct ChatHandler {
-    storage: Arc<Mutex<Storage>>,
-}
-```
-
-### Go Implementation
-```go
-func main() {
-    chatHandler := handlers.NewChatHandler()
-    // Goroutines and channels could be used for concurrent operations
-    var currentUser *models.User
-    // ...
-}
-
-// Thread-safe operations with sync.RWMutex
-type Storage struct {
-    mu       sync.RWMutex
-    users    map[uuid.UUID]models.User
-    messages []models.Message
-}
-```
-
-**Key Differences:**
-- Rust uses async/await for asynchronous operations
-- Go uses goroutines and channels for concurrency
-- Rust requires explicit async runtime (tokio)
-- Go has built-in concurrency support
-- Rust enforces thread safety through type system
-- Go provides sync primitives for thread safety
-
-## 3. Error Handling
+## 2. Error Handling
 
 ### Rust Implementation
 ```rust
@@ -141,7 +94,7 @@ if err != nil {
 - Rust enforces error handling at compile time
 - Go relies on developer discipline for error checking
 
-## 4. Type System and Data Structures
+## 3. Type System and Data Structures
 
 ### Rust Implementation
 ```rust
@@ -213,4 +166,4 @@ Both languages have their strengths and are well-suited for building a chat appl
 The choice between them often depends on specific requirements:
 - Use Rust when you need maximum performance and memory safety
 - Use Go when you need rapid development and good enough performance
-``` 
+```
