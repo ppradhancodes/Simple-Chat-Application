@@ -54,9 +54,9 @@ impl ChatHandler {
         storage.get_messages_for_user(&user_id)
     }
 
-    pub fn search_messages(&self, keyword: &str) -> Vec<Message> {
+    pub fn search_messages(&self, keyword: &str, user_id: &Uuid) -> Vec<Message> {
         let storage = self.storage.lock().unwrap();
-        storage.search_messages(keyword)
+        storage.search_messages(keyword, user_id)
     }
 
     pub fn list_users(&self) -> Vec<User> {
