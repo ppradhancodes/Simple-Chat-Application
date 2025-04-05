@@ -1,6 +1,5 @@
 use crate::models::{Message, User};
 use std::collections::HashMap;
-use std::sync::{Arc, Mutex};
 use uuid::Uuid;
 
 #[derive(Default)]
@@ -10,11 +9,11 @@ pub struct Storage {
 }
 
 impl Storage {
-    pub fn new() -> Arc<Mutex<Self>> {
-        Arc::new(Mutex::new(Self {
+    pub fn new() -> Self {
+        Self {
             users: HashMap::new(),
             messages: Vec::new(),
-        }))
+        }
     }
 
     pub fn add_user(&mut self, user: User) -> Result<(), String> {
@@ -48,10 +47,9 @@ impl Storage {
             .collect()
     }
 
-    pub fn search_messages(&self, keyword: &str, user_id: &Uuid) -> Vec<Message> {
+    pub fn search_messages(&self, keyword: &str) -> Vec<Message> {
         self.messages
             .iter()
-            .filter(|m| m.sender_id == *user_id || m.receiver_id == *user_id)
             .filter(|m| m.content.to_lowercase().contains(&keyword.to_lowercase()))
             .cloned()
             .collect()
