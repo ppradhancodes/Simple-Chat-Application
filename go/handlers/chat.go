@@ -48,8 +48,8 @@ func (h *ChatHandler) GetMessages(userID uuid.UUID) []models.Message {
     return h.storage.GetMessagesForUser(userID)
 }
 
-func (h *ChatHandler) SearchMessages(keyword string) []models.Message {
-    return h.storage.SearchMessages(keyword)
+func (h *ChatHandler) SearchMessages(keyword string, userID uuid.UUID) []models.Message {
+    return h.storage.SearchMessages(keyword, userID)
 }
 
 func (h *ChatHandler) ListUsers() []models.User {

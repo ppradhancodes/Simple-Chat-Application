@@ -61,10 +61,13 @@ func (s *Storage) GetMessagesForUser(userID uuid.UUID) []models.Message {
 	return userMessages
 }
 
-func (s *Storage) SearchMessages(keyword string) []models.Message {
+func (s *Storage) SearchMessages(keyword string, userID uuid.UUID) []models.Message {
 	var matchingMessages []models.Message
 	keyword = strings.ToLower(keyword)
 	for _, msg := range s.messages {
+		if msg.SenderID != userID && msg.ReceiverID != userID {
+			continue
+		}
 		if strings.Contains(strings.ToLower(msg.Content), keyword) {
 			matchingMessages = append(matchingMessages, msg)
 		}

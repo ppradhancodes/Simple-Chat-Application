@@ -82,7 +82,7 @@ func main() {
 				}
 				keyword := strings.TrimSpace(scanner.Text())
 
-				messages := chatHandler.SearchMessages(keyword)
+				messages := chatHandler.SearchMessages(keyword, currentUser.ID)
 				if len(messages) == 0 {
 					fmt.Println("No messages found.")
 				} else {
