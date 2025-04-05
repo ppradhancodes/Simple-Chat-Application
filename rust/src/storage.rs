@@ -47,9 +47,10 @@ impl Storage {
             .collect()
     }
 
-    pub fn search_messages(&self, keyword: &str) -> Vec<Message> {
+    pub fn search_messages(&self, keyword: &str, user_id: &Uuid) -> Vec<Message> {
         self.messages
             .iter()
+            .filter(|m| m.sender_id == *user_id || m.receiver_id == *user_id)
             .filter(|m| m.content.to_lowercase().contains(&keyword.to_lowercase()))
             .cloned()
             .collect()
