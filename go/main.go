@@ -15,7 +15,7 @@ func main() {
 	// Defer to exit peacefully
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Println("Detect issues in Application")
+			fmt.Println("Detect issues in application. Please try again")
 			os.Exit(1)
 		}
 	}()
