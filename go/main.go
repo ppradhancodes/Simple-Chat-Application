@@ -38,7 +38,7 @@ func main() {
 			currentUser = &user
 			fmt.Printf("Welcome, %s!\n", username)
 		} else {
-			fmt.Print("\nCommands:\n1. Send message\n2. View messages\n3. Search messages\n4. List users\n5. Logout\nChoice: ")
+			fmt.Print("\nCommands:\n1. Send message\n2. View messages\n3. Search messages\n4. Delete Message \n5. List users\n6. Logout\nChoice: ")
 			if !scanner.Scan() {
 				break
 			}
@@ -93,13 +93,26 @@ func main() {
 				}
 
 			case "4":
+				fmt.Print("Enter delete keyword: ")
+				if !scanner.Scan() {
+					break
+				}
+				keyword := strings.TrimSpace(scanner.Text())
+
+				isDelete := chatHandler.DeleteMessage(currentUser.ID, keyword)
+				if isDelete {
+					fmt.Println("Delete message successfully")
+				} else {
+					fmt.Println("No messages that are associated with the user.")
+				}
+			case "5":
 				users := chatHandler.ListUsers()
 				fmt.Println("\nRegistered users:")
 				for _, user := range users {
 					fmt.Printf("- %s\n", user.Username)
 				}
 
-			case "5":
+			case "6":
 				fmt.Printf("Goodbye, %s!\n", currentUser.Username)
 				currentUser = nil
 

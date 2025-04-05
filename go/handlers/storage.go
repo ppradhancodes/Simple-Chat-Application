@@ -10,12 +10,30 @@ import (
 	"chat-app/models"
 )
 
+type IStorage interface {
+	// AddUser will add the user to the system
+	AddUser(user models.User) error
+	// GetUser will get the user inforamtion based on the id
+	GetUser(id uuid.UUID) (models.User, bool)
+	// GetUser will get the user inforamtion based on the username
+	GetUserByUsername(username string) (models.User, bool)
+	// AddMessage will add the message to the storage
+	AddMessage(message models.Message)
+	// GetMessagesForUser will get all the messages that the current user has
+	GetMessagesForUser(userID uuid.UUID) []models.Message
+	// SearchMessages will search the messages that the current user has based on keyword
+	SearchMessages(keyword string) []models.Message
+	// DeleteMessage will delete the messages that the current user has based on keyword
+	DeleteMessage(userID uuid.UUID, keyword string) bool
+	// ListUsers will list all the users that are registered to the system
+	ListUsers() []models.User
+}
 type Storage struct {
 	users    map[uuid.UUID]models.User
 	messages []models.Message
 }
 
-func NewStorage() *Storage {
+func NewStorage() IStorage {
 	return &Storage{
 		users:    make(map[uuid.UUID]models.User),
 		messages: make([]models.Message, 0),
@@ -72,17 +90,20 @@ func (s *Storage) SearchMessages(keyword string) []models.Message {
 	return matchingMessages
 }
 
-func (s *Storage) DeleteMessage(userID uuid.UUID, keyword string) {
-    var nonDeleteMessage []models.Message
-    keyword = strings.ToLower(keyword)
-    for _, msg := range s.messages {
-        if msg.SenderID != userID && msg.ReceiverID != userID || !strings.Contains(strings.ToLower(msg.Content), keyword) {
-            	nonDeleteMessage = append(nonDeleteMessage, msg)
-        }
-    }
-    s.messages = nonDeleteMessage
+func (s *Storage) DeleteMessage(userID uuid.UUID, keyword string) bool {
+	var nonDeleteMessage []models.Message
+	keyword = strings.ToLower(keyword)
+	for _, msg := range s.messages {
+		if msg.SenderID != userID && msg.ReceiverID != userID || !strings.Contains(strings.ToLower(msg.Content), keyword) {
+			nonDeleteMessage = append(nonDeleteMessage, msg)
+		}
+	}
 
-    }
+	isDelete := len(nonDeleteMessage) != len(s.messages)
+	s.messages = nonDeleteMessage
+	return isDelete
+
+}
 
 func (s *Storage) ListUsers() []models.User {
 	return maps.Values(s.users)
