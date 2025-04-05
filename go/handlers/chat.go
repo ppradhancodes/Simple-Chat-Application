@@ -17,7 +17,7 @@ type IChatHandler interface {
 	// GetMessages will get all the messages that the current user has
 	GetMessages(userID uuid.UUID) []models.Message
 	// SearchMessages will search the messages that the current user has based on keyword
-	SearchMessages(keyword string) []models.Message
+	SearchMessages(keyword string, userID uuid.UUID) []models.Message
 	// DeleteMessage will delete the messages that the current user has based on keyword
 	DeleteMessage(userID uuid.UUID, keyword string) bool
 	// ListUsers will list all the users that are registered to the system
@@ -29,6 +29,8 @@ type IChatHandler interface {
 type ChatHandler struct {
 	storage IStorage
 }
+
+var _ IChatHandler = (*ChatHandler)(nil)
 
 func NewChatHandler() IChatHandler {
 	return &ChatHandler{
@@ -68,7 +70,7 @@ func (h *ChatHandler) GetMessages(userID uuid.UUID) []models.Message {
 }
 
 func (h *ChatHandler) SearchMessages(keyword string, userID uuid.UUID) []models.Message {
-    return h.storage.SearchMessages(keyword, userID)
+	return h.storage.SearchMessages(keyword, userID)
 }
 
 func (h *ChatHandler) DeleteMessage(userID uuid.UUID, keyword string) bool {
@@ -80,5 +82,5 @@ func (h *ChatHandler) ListUsers() []models.User {
 }
 
 func (h *ChatHandler) GetUser(id uuid.UUID) (models.User, bool) {
-    return h.storage.GetUser(id)
-} 
+	return h.storage.GetUser(id)
+}

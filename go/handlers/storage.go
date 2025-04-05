@@ -22,7 +22,7 @@ type IStorage interface {
 	// GetMessagesForUser will get all the messages that the current user has
 	GetMessagesForUser(userID uuid.UUID) []models.Message
 	// SearchMessages will search the messages that the current user has based on keyword
-	SearchMessages(keyword string) []models.Message
+	SearchMessages(keyword string, userID uuid.UUID) []models.Message
 	// DeleteMessage will delete the messages that the current user has based on keyword
 	DeleteMessage(userID uuid.UUID, keyword string) bool
 	// ListUsers will list all the users that are registered to the system
@@ -32,6 +32,8 @@ type Storage struct {
 	users    map[uuid.UUID]models.User
 	messages []models.Message
 }
+
+var _ IStorage = (*Storage)(nil)
 
 func NewStorage() IStorage {
 	return &Storage{
