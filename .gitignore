@@ -4,15 +4,7 @@
 **/*.rs.bk
 
 # Go build files
-/go/bin/
-/go/pkg/
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
-*.test
-*.out
+/go/chat-app
 
 # IDE and editor files
 .idea/

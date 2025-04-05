@@ -31,15 +31,14 @@ cargo run
 ## Go Implementation
 
 The Go implementation demonstrates:
-- Goroutines and channels for concurrent operations
 - Efficient message passing
-- Thread-safe operations with sync.RWMutex
 - Simple error handling
 
 ### Running the Go Application
 
 ```bash
 cd go
+go mod tidy
 go build
 ./chat-app
 ```
