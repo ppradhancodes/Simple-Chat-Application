@@ -54,7 +54,8 @@ Both applications provide a similar command-line interface:
    - View messages (2)
    - Search messages (3)
    - List users (4)
-   - Logout (5)
+   - Delete message (5)
+   - Logout (6)
 
 ## Design Considerations
 
