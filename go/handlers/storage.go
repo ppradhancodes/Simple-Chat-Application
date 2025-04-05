@@ -99,7 +99,7 @@ func (s *Storage) DeleteMessage(userID uuid.UUID, keyword string) bool {
 	var nonDeleteMessage []models.Message
 	keyword = strings.ToLower(keyword)
 	for _, msg := range s.messages {
-		if msg.SenderID != userID && msg.ReceiverID != userID || !strings.Contains(strings.ToLower(msg.Content), keyword) {
+		if (msg.SenderID != userID && msg.ReceiverID != userID) || !strings.Contains(strings.ToLower(msg.Content), keyword) {
 			nonDeleteMessage = append(nonDeleteMessage, msg)
 		}
 	}
