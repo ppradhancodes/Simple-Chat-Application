@@ -9,6 +9,7 @@ This repository contains two implementations of a simple chat application - one 
 - View message history
 - Search messages by keyword
 - List registered users
+- Delete messages by keyword
 - Timestamp-based message tracking
 
 ## Rust Implementation
@@ -21,9 +22,10 @@ The Rust implementation showcases:
 
 ```bash
 cd rust
-cargo build
 cargo run
 ```
+the application will show the result
+![Sample Output](./RustOutput.png)
 
 ## Go Implementation
 
@@ -39,6 +41,9 @@ go mod tidy
 go build
 ./chat-app
 ```
+
+the application will show the result
+![Sample Output](./GoOutput.png)
 
 ## Usage
 
